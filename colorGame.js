@@ -1,5 +1,7 @@
 var colors = GenerateRandomColorArray(6);
 
+var h1 = document.querySelector("h1");
+
 var squares = document.getElementsByClassName("square");
 
 var colorDisplay = document.getElementById("colorDisplay");
@@ -35,6 +37,8 @@ function ChangeColors(color) {
 	{
 		squares[i].style.backgroundColor = color;
 	}
+
+	h1.style.backgroundColor = color;
 }
 
 function PickColor() {
