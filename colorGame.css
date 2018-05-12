@@ -2,6 +2,10 @@ body {
 	background-color: #232323;
 }
 
+span {
+	color: white;
+}
+
 h1 {
 	color: white;
 }
@@ -12,9 +16,12 @@ h1 {
 }
 
 .square {
-	background-color: purple;
 	width: 30%;
 	float: left;
 	padding-bottom: 30%;
 	margin: 1.66%;
+}
+
+.hidden {
+	background-color: #232323;
 }

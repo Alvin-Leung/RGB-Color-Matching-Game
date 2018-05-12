@@ -11,7 +11,9 @@ var squares = document.getElementsByClassName("square");
 
 var colorDisplay = document.getElementById("colorDisplay");
 
-var pickedColor = colors[3];
+var messageDisplay = document.getElementById("message");
+
+var pickedColor = PickColor();
 
 colorDisplay.textContent = pickedColor.toUpperCase();
 
@@ -22,11 +24,28 @@ for (var i=0; i<squares.length; i++)
 	squares[i].addEventListener("click", function() {
 		if (this.style.backgroundColor === pickedColor)
 		{
-			alert("Correct!");
+			messageDisplay.textContent = "Correct";
+
+			ChangeColors(this.style.backgroundColor);
 		}
 		else
 		{
-			alert("Wrong!");
+			this.style.backgroundColor = "#232323";
+
+			messageDisplay.textContent = "Try Again";
 		}
 	});
+}
+
+function ChangeColors(color) {
+	for (var i=0; i<squares.length; i++)
+	{
+		squares[i].style.backgroundColor = color;
+	}
+}
+
+function PickColor() {
+	var index = Math.floor(Math.random() * colors.length);
+
+	return colors[index];
 }
