@@ -1,8 +1,10 @@
-var colors = GenerateRandomColorArray(6);
+var colors = [];
 
 var h1 = document.querySelector("h1");
 
-var squares = document.getElementsByClassName("square");
+var container = document.querySelector(".container");
+
+var squares = [];
 
 var colorDisplay = document.getElementById("colorDisplay");
 
@@ -14,29 +16,22 @@ var hardButton = document.getElementById("hardButton");
 
 var messageDisplay = document.getElementById("message");
 
-var pickedColor = PickRandomColor();
+var defaultNumberOfSquares = 6;
 
-colorDisplay.textContent = pickedColor.toUpperCase();
+var pickedColor;
 
-Initialize();
+resetButton.addEventListener("click", ResetClickHandler);
 
-function Initialize() {
-	ColorSquares();
+Initialize(defaultNumberOfSquares);
 
-	AttachEventListeners();
-}
+function Initialize(numberOfSquares) {
+	RemoveSquaresFromContainer();
 
-function AttachEventListeners() {
-	resetButton.addEventListener("click", ResetClickHandler);
+	squares = CreateSquares(numberOfSquares);
 
-	for (var i=0; i<squares.length; i++)
-	{
-		squares[i].addEventListener("click", SquareClickHandler);
-	}
-}
+	AppendSquaresToContainer();
 
-function ResetClickHandler() {
-	colors = GenerateRandomColorArray(6);
+	colors = GenerateRandomColorArray(numberOfSquares);
 
 	pickedColor = PickRandomColor();
 
@@ -44,9 +39,63 @@ function ResetClickHandler() {
 
 	ColorSquares();
 
-	this.textContent = "New Colors";
+	AddSquareEventListeners();
 
 	h1.style.backgroundColor = "#232323";
+
+	resetButton.textContent = "New Colors";
+}
+
+function CreateSquares(numberOfSquares)
+{
+	var squares = [];
+
+	var squareNode;
+
+	for (var i=0; i<numberOfSquares; i++)
+	{
+		squareNode = document.createElement("div");
+
+		squareNode.classList.add("square");
+
+		squares.push(squareNode);
+	}
+
+	return squares;
+}
+
+function AppendSquaresToContainer()
+{
+	for (var i=0; i<squares.length; i++)
+	{
+		container.appendChild(squares[i]);
+	}
+}
+
+function RemoveSquaresFromContainer()
+{
+	for (var i=0; i<squares.length; i++)
+	{
+		container.removeChild(squares[i]);
+	}
+}
+
+function AddSquareEventListeners() {
+	for (var i=0; i<squares.length; i++)
+	{
+		squares[i].addEventListener("click", SquareClickHandler);
+	}
+}
+
+function RemoveSquareEventListeners() {
+	for (var i=0; i<squares.length; i++)
+	{
+		squares[i].removeEventListener("click", SquareClickHandler);
+	}
+}
+
+function ResetClickHandler() {
+	Initialize(defaultNumberOfSquares);
 } 
 
 function SquareClickHandler() {
