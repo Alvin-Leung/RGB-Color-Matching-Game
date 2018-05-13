@@ -2,10 +2,6 @@ body {
 	background-color: #232323;
 }
 
-span {
-	color: white;
-}
-
 h1 {
 	color: white;
 }
@@ -13,6 +9,12 @@ h1 {
 .container {
 	width: 600px;
 	margin: 0 auto;
+}
+
+#stripe {
+	background-color: white;
+	height: 30px;
+	text-align: center;
 }
 
 .square {
