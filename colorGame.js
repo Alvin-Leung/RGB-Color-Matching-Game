@@ -6,42 +6,75 @@ var squares = document.getElementsByClassName("square");
 
 var colorDisplay = document.getElementById("colorDisplay");
 
+var resetButton = document.getElementById("resetButton");
+
 var messageDisplay = document.getElementById("message");
 
-var pickedColor = PickColor();
+var pickedColor = PickRandomColor();
 
 colorDisplay.textContent = pickedColor.toUpperCase();
 
-for (var i=0; i<squares.length; i++)
-{
-	squares[i].style.backgroundColor = colors[i];
+Initialize();
 
-	squares[i].addEventListener("click", function() {
-		if (this.style.backgroundColor === pickedColor)
-		{
-			messageDisplay.textContent = "Correct";
+function Initialize() {
+	ColorSquares();
 
-			ChangeColors(this.style.backgroundColor);
-		}
-		else
-		{
-			this.style.backgroundColor = "#232323";
-
-			messageDisplay.textContent = "Try Again";
-		}
-	});
+	AttachEventListeners();
 }
 
-function ChangeColors(color) {
+function AttachEventListeners() {
+	resetButton.addEventListener("click", function() {
+		colors = GenerateRandomColorArray(6);
+
+		pickedColor = PickRandomColor();
+
+		colorDisplay.textContent = pickedColor.toUpperCase();
+
+		ColorSquares();
+
+		this.textContent = "New Colors";
+
+		h1.style.backgroundColor = "#232323";
+	});
+
+	for (var i=0; i<squares.length; i++)
+	{
+		squares[i].addEventListener("click", function() {
+			if (this.style.backgroundColor === pickedColor)
+			{
+				messageDisplay.textContent = "Correct";
+
+				SetSquareColors(this.style.backgroundColor);
+
+				h1.style.backgroundColor = this.style.backgroundColor;
+
+				resetButton.textContent = "Play Again?";
+			}
+			else
+			{
+				this.style.backgroundColor = "#232323";
+
+				messageDisplay.textContent = "Try Again";
+			}
+		});
+	}
+}
+
+function ColorSquares() {
+	for (var i=0; i<squares.length; i++)
+	{
+		squares[i].style.backgroundColor = colors[i];
+	}
+}
+
+function SetSquareColors(color) {
 	for (var i=0; i<squares.length; i++)
 	{
 		squares[i].style.backgroundColor = color;
 	}
-
-	h1.style.backgroundColor = color;
 }
 
-function PickColor() {
+function PickRandomColor() {
 	var index = Math.floor(Math.random() * colors.length);
 
 	return colors[index];
