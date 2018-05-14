@@ -46,31 +46,11 @@ Application.Page = function() {
 		page.easyButton.classList.remove("selected");
 	};
 
-	var MouseOverHandler = function() {
-		this.classList.add("mouseover");
-	};
-
-	var MouseLeaveHandler = function() {
-		this.classList.remove("mouseover");
-	}
-
 	page.resetButton.addEventListener("click", ResetClickHandler);
-
-	page.resetButton.addEventListener("mouseover", MouseOverHandler);
-
-	page.resetButton.addEventListener("mouseleave", MouseLeaveHandler);
 
 	page.easyButton.addEventListener("click", EasyButtonClickHandler);
 
-	page.easyButton.addEventListener("mouseover", MouseOverHandler);
-
-	page.easyButton.addEventListener("mouseleave", MouseLeaveHandler);
-
 	page.hardButton.addEventListener("click", HardButtonClickHandler);
-
-	page.hardButton.addEventListener("mouseover", MouseOverHandler);
-
-	page.hardButton.addEventListener("mouseleave", MouseLeaveHandler);
 
 	return page;
 }();
@@ -121,10 +101,12 @@ Application.SquareGenerator = function() {
 	};
 
 	var ColorSquares = function() {
-		for (var i=0; i<squares.length; i++)
-		{
-			squares[i].style.backgroundColor = colors[i];
-		}
+		window.setTimeout(function() {
+			for (var i=0; i<squares.length; i++)
+			{
+				squares[i].style.backgroundColor = colors[i];
+			}
+		}, 100);
 	};
 
 	var AddSquareEventListeners = function() {
@@ -176,9 +158,9 @@ Application.SquareGenerator = function() {
 
 			Application.Page.SetColorDisplay(pickedColor);
 
-			ColorSquares();
-
 			AddSquareEventListeners();
+
+			ColorSquares();
 		}
 	};
 }();
