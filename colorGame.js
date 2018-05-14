@@ -1,28 +1,44 @@
 var Application = {};
 
-var defaultNumberOfSquares = 6;
-
 Application.Page = function() {
 
 	var ResetClickHandler = function() {
-		Application.SquareGenerator.Initialize(defaultNumberOfSquares);
-	} 
+		Application.SquareGenerator.Initialize();
+	}; 
+
+	var EasyButtonClickHandler = function() {
+		Application.SquareGenerator.Initialize(3);
+	};
+
+	var HardButtonClickHandler = function() {
+		Application.SquareGenerator.Initialize(6);
+	};
 
 	var resetButton = document.getElementById("resetButton");
 
+	var easyButton = document.getElementById("easyButton");
+
+	var hardButton = document.getElementById("hardButton");
+
 	resetButton.addEventListener("click", ResetClickHandler);
+
+	easyButton.addEventListener("click", EasyButtonClickHandler);
+
+	hardButton.addEventListener("click", HardButtonClickHandler);
 
 	return {
 		h1: document.querySelector("h1"),
 		colorDisplay: document.getElementById("colorDisplay"),
 		resetButton: this.resetButton,
-		easyButton: document.getElementById("easyButton"),
-		hardButton: document.getElementById("hardButton"),
+		easyButton: this.easyButton,
+		hardButton: this.hardButton,
 		messageDisplay: document.getElementById("message")
 	};
 }();
 
 Application.SquareGenerator = function() {
+	var lastInitializationNumberOfSquares = 6;
+
 	var squares = [];
 
 	var colors = [];
@@ -37,7 +53,7 @@ Application.SquareGenerator = function() {
 		{
 			container.removeChild(squares[i]);
 		}
-	}
+	};
 
 	var CreateSquares = function(numberOfSquares)
 	{
@@ -55,7 +71,7 @@ Application.SquareGenerator = function() {
 		}
 
 		return squares;
-	}
+	};
 
 	var AppendSquaresToContainer = function()
 	{
@@ -63,21 +79,21 @@ Application.SquareGenerator = function() {
 		{
 			container.appendChild(squares[i]);
 		}
-	}
+	};
 
 	var ColorSquares = function() {
 		for (var i=0; i<squares.length; i++)
 		{
 			squares[i].style.backgroundColor = colors[i];
 		}
-	}
+	};
 
 	var AddSquareEventListeners = function() {
 		for (var i=0; i<squares.length; i++)
 		{
 			squares[i].addEventListener("click", SquareClickHandler);
 		}
-	}
+	};
 
 	var SquareClickHandler = function() {
 		if (this.style.backgroundColor === pickedColor)
@@ -96,17 +112,18 @@ Application.SquareGenerator = function() {
 
 			Application.Page.messageDisplay.textContent = "Try Again";
 		}
-	}
+	};
 
 	var SetSquareColors = function(color) {
 		for (var i=0; i<squares.length; i++)
 		{
 			squares[i].style.backgroundColor = color;
 		}
-	}
+	};
 
 	return {
-		Initialize: function(numberOfSquares) {
+		Initialize: function(numberOfSquares = lastInitializationNumberOfSquares) {
+			lastInitializationNumberOfSquares = numberOfSquares;
 
 			RemoveSquaresFromContainer();
 
@@ -118,7 +135,7 @@ Application.SquareGenerator = function() {
 
 			pickedColor = Application.ColorGenerator.PickRandomColor(colors);
 
-			Application.Page.colorDisplay.textContent = pickedColor.toUpperCase();
+			Application.Page.colorDisplay.textContent = pickedColor.toUpperCase(); // probably doing too much
 
 			ColorSquares();
 
@@ -142,14 +159,14 @@ Application.ColorGenerator = function() {
 		var rgb = "rgb(" + red.toString() + ", " + green.toString() + ", " + blue.toString() + ")";
 
 		return rgb;
-	}
+	};
 
 	var GetRandom8BitNumber = function()
 	{
 		var rand8Bit = Math.floor(Math.random() * 256);
 
 		return rand8Bit;
-	}
+	};
 
 	return {
 		PickRandomColor: function(colors) {
@@ -172,4 +189,4 @@ Application.ColorGenerator = function() {
 	};
 }();
 
-Application.SquareGenerator.Initialize(defaultNumberOfSquares);
+Application.SquareGenerator.Initialize();
