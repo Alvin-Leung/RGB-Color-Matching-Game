@@ -1,20 +1,26 @@
 var Application = {};
 
-var h1 = document.querySelector("h1");
-
-var colorDisplay = document.getElementById("colorDisplay");
-
-var resetButton = document.getElementById("resetButton");
-
-var easyButton = document.getElementById("easyButton");
-
-var hardButton = document.getElementById("hardButton");
-
-var messageDisplay = document.getElementById("message");
-
 var defaultNumberOfSquares = 6;
 
-resetButton.addEventListener("click", ResetClickHandler);
+Application.Page = function() {
+
+	var ResetClickHandler = function() {
+		Application.SquareGenerator.Initialize(defaultNumberOfSquares);
+	} 
+
+	var resetButton = document.getElementById("resetButton");
+
+	resetButton.addEventListener("click", ResetClickHandler);
+
+	return {
+		h1: document.querySelector("h1"),
+		colorDisplay: document.getElementById("colorDisplay"),
+		resetButton: this.resetButton,
+		easyButton: document.getElementById("easyButton"),
+		hardButton: document.getElementById("hardButton"),
+		messageDisplay: document.getElementById("message")
+	};
+}();
 
 Application.SquareGenerator = function() {
 	var squares = [];
@@ -76,19 +82,19 @@ Application.SquareGenerator = function() {
 	var SquareClickHandler = function() {
 		if (this.style.backgroundColor === pickedColor)
 		{
-			messageDisplay.textContent = "Correct";
+			Application.Page.messageDisplay.textContent = "Correct";
 
 			SetSquareColors(this.style.backgroundColor);
 
-			h1.style.backgroundColor = this.style.backgroundColor;
+			Application.Page.h1.style.backgroundColor = this.style.backgroundColor;
 
-			resetButton.textContent = "Play Again?";
+			Application.Page.resetButton.textContent = "Play Again?";
 		}
 		else
 		{
 			this.style.backgroundColor = "#232323";
 
-			messageDisplay.textContent = "Try Again";
+			Application.Page.messageDisplay.textContent = "Try Again";
 		}
 	}
 
@@ -112,15 +118,15 @@ Application.SquareGenerator = function() {
 
 			pickedColor = Application.ColorGenerator.PickRandomColor(colors);
 
-			colorDisplay.textContent = pickedColor.toUpperCase(); // colorDisplay needs to go somewhere that makes sense
+			Application.Page.colorDisplay.textContent = pickedColor.toUpperCase();
 
 			ColorSquares();
 
 			AddSquareEventListeners();
 
-			h1.style.backgroundColor = "#232323"; // h1 needs to go somewhere that makes sense
+			Application.Page.h1.style.backgroundColor = "#232323";
 
-			resetButton.textContent = "New Colors"; // probably doing too much
+			Application.Page.resetButton.textContent = "New Colors"; // probably doing too much
 		}
 	};
 }();
@@ -167,7 +173,3 @@ Application.ColorGenerator = function() {
 }();
 
 Application.SquareGenerator.Initialize(defaultNumberOfSquares);
-
-function ResetClickHandler() {
-	Application.SquareGenerator.Initialize(defaultNumberOfSquares);
-} 
