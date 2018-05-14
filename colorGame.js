@@ -30,12 +30,20 @@ Application.Page = function() {
 		ResetPage();
 
 		Application.SquareGenerator.Initialize(3);
+
+		this.classList.add("selected");
+
+		page.hardButton.classList.remove("selected");
 	};
 
 	var HardButtonClickHandler = function() {
 		ResetPage();
 
 		Application.SquareGenerator.Initialize(6);
+
+		this.classList.add("selected");
+
+		page.easyButton.classList.remove("selected");
 	};
 
 	page.resetButton.addEventListener("click", ResetClickHandler);

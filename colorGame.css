@@ -24,6 +24,6 @@ h1 {
 	margin: 1.66%;
 }
 
-.hidden {
-	background-color: #232323;
+.selected {
+	background-color: blue;
 }
