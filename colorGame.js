@@ -19,6 +19,8 @@ Application.Page = function() {
 		page.h1.style.backgroundColor = "steelblue";
 
 		page.resetButton.textContent = "New Colors";
+
+		page.messageDisplay.textContent = "";
 	}
 
 	var ResetClickHandler = function() {

@@ -90,6 +90,7 @@ button:focus {
 #message {
 	display: inline-block;
 	width: 200px;
+	padding-left: 25px;
 	color: steelblue;
 	font-size: inherit;
 	font-weight: 700;
