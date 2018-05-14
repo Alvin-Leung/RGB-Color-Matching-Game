@@ -108,9 +108,9 @@ Application.SquareGenerator = function() {
 
 			AppendSquaresToContainer();
 
-			colors = GenerateRandomColorArray(numberOfSquares); // need to put this function in helper class
+			colors = Application.ColorGenerator.GenerateRandomColorArray(numberOfSquares);
 
-			pickedColor = PickRandomColor(colors); // need to put this function in helper class
+			pickedColor = Application.ColorGenerator.PickRandomColor(colors);
 
 			colorDisplay.textContent = pickedColor.toUpperCase(); // colorDisplay needs to go somewhere that makes sense
 
@@ -125,45 +125,49 @@ Application.SquareGenerator = function() {
 	};
 }();
 
+Application.ColorGenerator = function() {
+	var GenerateRandomColor = function() {
+		var red = GetRandom8BitNumber();
+
+		var green = GetRandom8BitNumber();
+
+		var blue = GetRandom8BitNumber();
+
+		var rgb = "rgb(" + red.toString() + ", " + green.toString() + ", " + blue.toString() + ")";
+
+		return rgb;
+	}
+
+	var GetRandom8BitNumber = function()
+	{
+		var rand8Bit = Math.floor(Math.random() * 256);
+
+		return rand8Bit;
+	}
+
+	return {
+		PickRandomColor: function(colors) {
+			var index = Math.floor(Math.random() * colors.length);
+
+			return colors[index];
+		},
+
+		GenerateRandomColorArray: function(numberOfRandomColors)
+		{
+			var colorArray = [];
+
+			for (var i=0; i<numberOfRandomColors; i++)
+			{
+				colorArray.push(GenerateRandomColor());
+			}
+
+			return colorArray;
+		}
+	};
+}();
+
 Application.SquareGenerator.Initialize(defaultNumberOfSquares);
 
 function ResetClickHandler() {
 	Application.SquareGenerator.Initialize(defaultNumberOfSquares);
 } 
-
-function PickRandomColor(colors) {
-	var index = Math.floor(Math.random() * colors.length);
-
-	return colors[index];
-}
-
-function GenerateRandomColorArray(numberOfRandomColors)
-{
-	var colorArray = [];
-
-	for (var i=0; i<numberOfRandomColors; i++)
-	{
-		colorArray.push(GenerateRandomColor());
-	}
-
-	return colorArray;
-}
-
-function GenerateRandomColor() {
-	var red = GetRandom8BitNumber();
-
-	var green = GetRandom8BitNumber();
-
-	var blue = GetRandom8BitNumber();
-
-	var rgb = "rgb(" + red.toString() + ", " + green.toString() + ", " + blue.toString() + ")";
-
-	return rgb;
-}
-
-function GetRandom8BitNumber()
-{
-	var rand8Bit = Math.floor(Math.random() * 256);
-
-	return rand8Bit;
-}
