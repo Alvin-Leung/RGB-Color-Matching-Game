@@ -1,20 +1,39 @@
 body {
 	background-color: #232323;
+	margin: 0;
+	font-family: "Lato";
 }
 
 h1 {
+	background-color: steelblue;
 	color: white;
+	text-align: center;
+	font-weight: normal;
+	text-transform: uppercase;
+	line-height: 1.1;
+	margin: 0;
+	padding: 20px 0;
+}
+
+button {
+	height: 100%;
+	border: none;
+	background: none;
+	font-family: "Lato";
+	font-weight: 700;
+	font-size: inherit;
+	color: steelblue;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+
+button:focus {
+	outline:0;
 }
 
 .container {
 	width: 600px;
 	margin: 0 auto;
-}
-
-#stripe {
-	background-color: white;
-	height: 30px;
-	text-align: center;
 }
 
 .square {
@@ -25,5 +44,27 @@ h1 {
 }
 
 .selected {
-	background-color: blue;
+	color: white;
+	background-color: steelblue;
+}
+
+.mouseover {
+	color: white;
+	background-color: steelblue;
+}
+
+#colorDisplay {
+	font-size: 200%;
+}
+
+#stripe {
+	background-color: white;
+	height: 30px;
+	text-align: center;
+}
+
+#message {
+	display: inline-block;
+	width: 200px;
+	color: steelblue;
 }

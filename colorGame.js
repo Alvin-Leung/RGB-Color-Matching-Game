@@ -10,12 +10,12 @@ Application.Page = function() {
 		hardButton: document.getElementById("hardButton"),
 		messageDisplay: document.getElementById("message"),
 		SetColorDisplay: function(rgbString) {
-			this.colorDisplay.textContent = rgbString.toUpperCase();
+			this.colorDisplay.textContent = rgbString;
 		}
 	}
 
 	var ResetPage = function() {
-		page.h1.style.backgroundColor = "#232323";
+		page.h1.style.backgroundColor = "steelblue";
 
 		page.resetButton.textContent = "New Colors";
 	}
@@ -46,11 +46,31 @@ Application.Page = function() {
 		page.easyButton.classList.remove("selected");
 	};
 
+	var MouseOverHandler = function() {
+		this.classList.add("mouseover");
+	};
+
+	var MouseLeaveHandler = function() {
+		this.classList.remove("mouseover");
+	}
+
 	page.resetButton.addEventListener("click", ResetClickHandler);
+
+	page.resetButton.addEventListener("mouseover", MouseOverHandler);
+
+	page.resetButton.addEventListener("mouseleave", MouseLeaveHandler);
 
 	page.easyButton.addEventListener("click", EasyButtonClickHandler);
 
+	page.easyButton.addEventListener("mouseover", MouseOverHandler);
+
+	page.easyButton.addEventListener("mouseleave", MouseLeaveHandler);
+
 	page.hardButton.addEventListener("click", HardButtonClickHandler);
+
+	page.hardButton.addEventListener("mouseover", MouseOverHandler);
+
+	page.hardButton.addEventListener("mouseleave", MouseLeaveHandler);
 
 	return page;
 }();
