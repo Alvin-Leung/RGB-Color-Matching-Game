@@ -1,10 +1,6 @@
-var colors = [];
+var Application = {};
 
 var h1 = document.querySelector("h1");
-
-var container = document.querySelector(".container");
-
-var squares = [];
 
 var colorDisplay = document.getElementById("colorDisplay");
 
@@ -18,120 +14,124 @@ var messageDisplay = document.getElementById("message");
 
 var defaultNumberOfSquares = 6;
 
-var pickedColor;
-
 resetButton.addEventListener("click", ResetClickHandler);
 
-Initialize(defaultNumberOfSquares);
-
-function Initialize(numberOfSquares) {
-	RemoveSquaresFromContainer();
-
-	squares = CreateSquares(numberOfSquares);
-
-	AppendSquaresToContainer();
-
-	colors = GenerateRandomColorArray(numberOfSquares);
-
-	pickedColor = PickRandomColor();
-
-	colorDisplay.textContent = pickedColor.toUpperCase();
-
-	ColorSquares();
-
-	AddSquareEventListeners();
-
-	h1.style.backgroundColor = "#232323";
-
-	resetButton.textContent = "New Colors";
-}
-
-function CreateSquares(numberOfSquares)
-{
+Application.SquareGenerator = function() {
 	var squares = [];
 
-	var squareNode;
+	var colors = [];
 
-	for (var i=0; i<numberOfSquares; i++)
+	var pickedColor;
+
+	var container = document.querySelector(".container");
+
+	var RemoveSquaresFromContainer = function() 
 	{
-		squareNode = document.createElement("div");
-
-		squareNode.classList.add("square");
-
-		squares.push(squareNode);
+		for (var i=0; i<squares.length; i++)
+		{
+			container.removeChild(squares[i]);
+		}
 	}
 
-	return squares;
-}
-
-function AppendSquaresToContainer()
-{
-	for (var i=0; i<squares.length; i++)
+	var CreateSquares = function(numberOfSquares)
 	{
-		container.appendChild(squares[i]);
-	}
-}
+		var squares = [];
 
-function RemoveSquaresFromContainer()
-{
-	for (var i=0; i<squares.length; i++)
-	{
-		container.removeChild(squares[i]);
-	}
-}
+		var squareNode;
 
-function AddSquareEventListeners() {
-	for (var i=0; i<squares.length; i++)
-	{
-		squares[i].addEventListener("click", SquareClickHandler);
-	}
-}
+		for (var i=0; i<numberOfSquares; i++)
+		{
+			squareNode = document.createElement("div");
 
-function RemoveSquareEventListeners() {
-	for (var i=0; i<squares.length; i++)
-	{
-		squares[i].removeEventListener("click", SquareClickHandler);
+			squareNode.classList.add("square");
+
+			squares.push(squareNode);
+		}
+
+		return squares;
 	}
-}
+
+	var AppendSquaresToContainer = function()
+	{
+		for (var i=0; i<squares.length; i++)
+		{
+			container.appendChild(squares[i]);
+		}
+	}
+
+	var ColorSquares = function() {
+		for (var i=0; i<squares.length; i++)
+		{
+			squares[i].style.backgroundColor = colors[i];
+		}
+	}
+
+	var AddSquareEventListeners = function() {
+		for (var i=0; i<squares.length; i++)
+		{
+			squares[i].addEventListener("click", SquareClickHandler);
+		}
+	}
+
+	var SquareClickHandler = function() {
+		if (this.style.backgroundColor === pickedColor)
+		{
+			messageDisplay.textContent = "Correct";
+
+			SetSquareColors(this.style.backgroundColor);
+
+			h1.style.backgroundColor = this.style.backgroundColor;
+
+			resetButton.textContent = "Play Again?";
+		}
+		else
+		{
+			this.style.backgroundColor = "#232323";
+
+			messageDisplay.textContent = "Try Again";
+		}
+	}
+
+	var SetSquareColors = function(color) {
+		for (var i=0; i<squares.length; i++)
+		{
+			squares[i].style.backgroundColor = color;
+		}
+	}
+
+	return {
+		Initialize: function(numberOfSquares) {
+
+			RemoveSquaresFromContainer();
+
+			squares = CreateSquares(numberOfSquares);
+
+			AppendSquaresToContainer();
+
+			colors = GenerateRandomColorArray(numberOfSquares); // need to put this function in helper class
+
+			pickedColor = PickRandomColor(colors); // need to put this function in helper class
+
+			colorDisplay.textContent = pickedColor.toUpperCase(); // colorDisplay needs to go somewhere that makes sense
+
+			ColorSquares();
+
+			AddSquareEventListeners();
+
+			h1.style.backgroundColor = "#232323"; // h1 needs to go somewhere that makes sense
+
+			resetButton.textContent = "New Colors"; // probably doing too much
+		}
+	};
+}();
+
+Application.SquareGenerator.Initialize(defaultNumberOfSquares);
 
 function ResetClickHandler() {
-	Initialize(defaultNumberOfSquares);
+	Application.SquareGenerator.Initialize(defaultNumberOfSquares);
 } 
 
-function SquareClickHandler() {
-	if (this.style.backgroundColor === pickedColor)
-	{
-		messageDisplay.textContent = "Correct";
-
-		SetSquareColors(this.style.backgroundColor);
-
-		h1.style.backgroundColor = this.style.backgroundColor;
-
-		resetButton.textContent = "Play Again?";
-	}
-	else
-	{
-		this.style.backgroundColor = "#232323";
-
-		messageDisplay.textContent = "Try Again";
-	}
-}
-
-function ColorSquares() {
-	for (var i=0; i<squares.length; i++)
-	{
-		squares[i].style.backgroundColor = colors[i];
-	}
-}
-
-function SetSquareColors(color) {
-	for (var i=0; i<squares.length; i++)
-	{
-		squares[i].style.backgroundColor = color;
-	}
-}
-
-function PickRandomColor() {
+function PickRandomColor(colors) {
 	var index = Math.floor(Math.random() * colors.length);
 
 	return colors[index];
