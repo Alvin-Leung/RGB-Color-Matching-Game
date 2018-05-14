@@ -2,38 +2,49 @@ var Application = {};
 
 Application.Page = function() {
 
+	var page = {
+		h1: document.querySelector("h1"),
+		colorDisplay: document.getElementById("colorDisplay"),
+		resetButton: document.getElementById("resetButton"),
+		easyButton: document.getElementById("easyButton"),
+		hardButton: document.getElementById("hardButton"),
+		messageDisplay: document.getElementById("message"),
+		SetColorDisplay: function(rgbString) {
+			this.colorDisplay.textContent = rgbString.toUpperCase();
+		}
+	}
+
+	var ResetPage = function() {
+		page.h1.style.backgroundColor = "#232323";
+
+		page.resetButton.textContent = "New Colors";
+	}
+
 	var ResetClickHandler = function() {
+		ResetPage();
+
 		Application.SquareGenerator.Initialize();
 	}; 
 
 	var EasyButtonClickHandler = function() {
+		ResetPage();
+
 		Application.SquareGenerator.Initialize(3);
 	};
 
 	var HardButtonClickHandler = function() {
+		ResetPage();
+
 		Application.SquareGenerator.Initialize(6);
 	};
 
-	var resetButton = document.getElementById("resetButton");
+	page.resetButton.addEventListener("click", ResetClickHandler);
 
-	var easyButton = document.getElementById("easyButton");
+	page.easyButton.addEventListener("click", EasyButtonClickHandler);
 
-	var hardButton = document.getElementById("hardButton");
+	page.hardButton.addEventListener("click", HardButtonClickHandler);
 
-	resetButton.addEventListener("click", ResetClickHandler);
-
-	easyButton.addEventListener("click", EasyButtonClickHandler);
-
-	hardButton.addEventListener("click", HardButtonClickHandler);
-
-	return {
-		h1: document.querySelector("h1"),
-		colorDisplay: document.getElementById("colorDisplay"),
-		resetButton: this.resetButton,
-		easyButton: this.easyButton,
-		hardButton: this.hardButton,
-		messageDisplay: document.getElementById("message")
-	};
+	return page;
 }();
 
 Application.SquareGenerator = function() {
@@ -135,15 +146,11 @@ Application.SquareGenerator = function() {
 
 			pickedColor = Application.ColorGenerator.PickRandomColor(colors);
 
-			Application.Page.colorDisplay.textContent = pickedColor.toUpperCase(); // probably doing too much
+			Application.Page.SetColorDisplay(pickedColor);
 
 			ColorSquares();
 
 			AddSquareEventListeners();
-
-			Application.Page.h1.style.backgroundColor = "#232323";
-
-			Application.Page.resetButton.textContent = "New Colors"; // probably doing too much
 		}
 	};
 }();
