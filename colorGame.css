@@ -60,6 +60,18 @@ button:focus {
 	-moz-transition: background-color 0.7s;
 }
 
+.squareSmall {
+	background-color: #232323;
+	width: 22.5%;
+	float: left;
+	padding-bottom: 22.5%;
+	margin: 1.25%;
+	border-radius: 15%;
+	transition: background-color 0.7s;
+	--webkit-transition: background-color 0.7s;
+	-moz-transition: background-color 0.7s;
+}
+
 .selected {
 	color: white;
 	background-color: steelblue;

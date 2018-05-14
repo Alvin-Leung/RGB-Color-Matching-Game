@@ -8,6 +8,7 @@ Application.Page = function() {
 		resetButton: document.getElementById("resetButton"),
 		easyButton: document.getElementById("easyButton"),
 		hardButton: document.getElementById("hardButton"),
+		expertButton: document.getElementById("expertButton"),
 		messageDisplay: document.getElementById("message"),
 		SetColorDisplay: function(rgbString) {
 			this.colorDisplay.textContent = rgbString;
@@ -34,6 +35,8 @@ Application.Page = function() {
 		this.classList.add("selected");
 
 		page.hardButton.classList.remove("selected");
+
+		page.expertButton.classList.remove("selected");
 	};
 
 	var HardButtonClickHandler = function() {
@@ -44,6 +47,20 @@ Application.Page = function() {
 		this.classList.add("selected");
 
 		page.easyButton.classList.remove("selected");
+
+		page.expertButton.classList.remove("selected");
+	};
+
+	var ExpertButtonClickHandler = function() {
+		ResetPage();
+
+		Application.SquareGenerator.Initialize(12);
+
+		this.classList.add("selected");
+
+		page.easyButton.classList.remove("selected");
+
+		page.hardButton.classList.remove("selected");
 	};
 
 	page.resetButton.addEventListener("click", ResetClickHandler);
@@ -51,6 +68,8 @@ Application.Page = function() {
 	page.easyButton.addEventListener("click", EasyButtonClickHandler);
 
 	page.hardButton.addEventListener("click", HardButtonClickHandler);
+
+	page.expertButton.addEventListener("click", ExpertButtonClickHandler);
 
 	return page;
 }();
@@ -80,11 +99,22 @@ Application.SquareGenerator = function() {
 
 		var squareNode;
 
+		var squareClass;
+
+		if (numberOfSquares <= 6) 
+		{
+			squareClass = "square";
+		}
+		else
+		{
+			squareClass = "squareSmall";
+		}
+
 		for (var i=0; i<numberOfSquares; i++)
 		{
 			squareNode = document.createElement("div");
 
-			squareNode.classList.add("square");
+			squareNode.classList.add(squareClass);
 
 			squares.push(squareNode);
 		}
