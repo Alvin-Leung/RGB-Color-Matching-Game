@@ -1,0 +1,16 @@
+{
+  "name": "color-matching-game",
+  "version": "1.0.0",
+  "description": "The RGB Color Matching Game helps players practice identifying colors from the component values of red, green, and blue within a color triplet. This project was made using vanilla JavaScript, and is responsive on desktop. Closures and the module design pattern were used to separate responsibility, hide private functionality, and avoid polluting the global namespace.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.3"
+  }
+}
